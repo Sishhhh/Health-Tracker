@@ -1,0 +1,50 @@
+
+<div class="flex mb-9 w-full justify-center gap-12 items-center mt-4 p-4">
+    <input type="text" class="border-2 outline-none px-4 py-3 w-[30%]" placeholder="Search for user"
+        [(ngModel)]="searchValue" (ngModelChange)="applyFilter()">
+    <select [(ngModel)]="selectedWorkoutType" class="border-2 outline-none px-4 py-3 w-[20%]" (change)="onWorkoutTypeChange($event)">
+        <option *ngFor="let type of workoutTypes" [value]="type">{{ type }}</option>
+    </select>
+    <div class="flex items-center gap-4">
+        <button class="bg-green-600 text-white rounded border-none outline-none px-4 py-3 hover:bg-green-700 " routerLink="/usercharts">show charts</button>
+        <button class="bg-blue-950 text-white rounded border-none outline-none px-4 py-3 hover:bg-blue-700 " routerLink="/">Add new user/workout</button>
+    </div>
+</div>
+
+<div class="w-[70%] m-auto">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <!-- User Name Column -->
+        <ng-container matColumnDef="userName">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let user">{{ user.userName }}</td>
+        </ng-container>
+
+        <!-- Workouts Column -->
+        <ng-container matColumnDef="workouts">
+            <th mat-header-cell *matHeaderCellDef>Workouts</th>
+            <td mat-cell *matCellDef="let user">
+                <ul>
+                    <li *ngFor="let workout of user.workout">{{ workout.type }}: {{ workout.time }} mins</li>
+                </ul>
+            </td>
+        </ng-container>
+
+        <!-- Total Workout Types Column -->
+        <ng-container matColumnDef="totalWorkoutTypes">
+            <th mat-header-cell *matHeaderCellDef>Number of Workouts</th>
+            <td mat-cell *matCellDef="let user">{{ user.workout.length }}</td>
+        </ng-container>
+
+        <!-- Total Time Column -->
+        <ng-container matColumnDef="totalTime">
+            <th mat-header-cell *matHeaderCellDef>Total Workout Minutes</th>
+            <td mat-cell *matCellDef="let user">{{ user.totalTime }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>
+<div class="w-full flex justify-center mt-7">
+    <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]" aria-label="Select page"></mat-paginator>
+</div>

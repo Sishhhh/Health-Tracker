@@ -1,0 +1,65 @@
+<div class="w-screen min-h-screen flex justify-evenly items-center p-4">
+  <div class="w-[40%] h-full border-r-2 pr-14 relative">
+    <div class="absolute bottom-0 left-[150px]" routerLink="/allusers">
+      <button class="bg-yellow-400 rounded text-black px-4 py-2 border-none outline-none hover:bg-yellow-500">Show all users</button>
+    </div>
+    <div class="mb-9 flex justify-between item-center">
+      <p class="text-5xl font-semibold text-blue-600">Add new user / workout</p>
+    </div>
+    <hr>
+    <div class="mt-14">
+      <form [formGroup]="workoutForm" (ngSubmit)="onSubmit()">
+        <div class="w-full flex justify-between items-center mb-7">
+          <label class="text-xl" for="userName">Name:</label>
+          <div class="flex-col items-start gap-2 w-[60%]">
+            <input id="userName" formControlName="userName" class="w-full px-5 py-2 outline-none border-x-2 border-y-2" placeholder="enter your name">
+            <div class="mt-2 p-1 text-white bg-red-500 text-sm"
+              *ngIf="workoutForm.get('userName')?.touched && workoutForm.get('userName')?.invalid">
+              <div *ngIf="workoutForm.get('userName')?.errors?.['required']">Name is required.</div>
+              <div *ngIf="workoutForm.get('userName')?.errors?.['minlength']">Name must be at least 3 characters long.</div>
+              <div *ngIf="workoutForm.get('userName')?.errors?.['maxlength']">Name cannot exceed 20 characters.</div>
+            </div>
+          </div>
+        </div>
+      
+        <div class="w-full flex justify-between items-center mb-7">
+          <label class="text-xl" for="workoutMinutes">Workout Minutes:</label>
+          <div class="flex-col items-start gap-2 w-[60%]">
+            <input id="workoutMinutes" type="number" formControlName="workoutMinutes"
+              class="w-full px-5 py-2 outline-none border-x-2 border-y-2" placeholder="enter total workout minutes">
+            <div class="mt-2 p-1 text-white bg-red-500 text-sm"
+              *ngIf="workoutForm.get('workoutMinutes')?.touched && workoutForm.get('workoutMinutes')?.invalid">
+              <div *ngIf="workoutForm.get('workoutMinutes')?.errors?.['required']">Workout minutes are required.</div>
+              <div *ngIf="workoutForm.get('workoutMinutes')?.errors?.['min']">Workout minutes must be at least 30.</div>
+              <div *ngIf="workoutForm.get('workoutMinutes')?.errors?.['pattern']">Workout minutes must be a positive number.
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <div class="w-full flex justify-between items-center mb-7">
+          <label class="text-xl" for="workoutType">Workout Type:</label>
+          <div class="flex-col items-start gap-2 w-[60%]">
+            <select id="workoutType" formControlName="workoutType" class="w-full px-5 py-2 outline-none bg-white border-x-2 border-y-2">
+              <option *ngFor="let type of workoutTypes" [value]="type">{{ type }}</option>
+            </select>
+            <div class="mt-2 p-1 text-white bg-red-500 text-sm"
+              *ngIf="workoutForm.get('workoutType')?.touched && workoutForm.get('workoutType')?.invalid">
+              <div *ngIf="workoutForm.get('workoutType')?.errors?.['required']">Workout type is required.</div>
+            </div>
+          </div>
+        </div>
+      
+        <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">add workout</button>
+      </form>
+
+
+    </div>
+
+  </div>
+
+  
+  <div class="w-[500px] h-[500px] object-cover overflow-hidden">
+    <img class="w-full h-full" src="assets/Workout.gif" alt="">
+  </div>
+</div>
